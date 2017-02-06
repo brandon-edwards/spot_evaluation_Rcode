@@ -1,5 +1,5 @@
 #rm(list=ls())
-setwd("C:/Users/galujanm/Documents/ML Performance metrics/proxy_spark")
+setwd("/Users/edwardsb/LocalRepos/gustavo_evaluation_Rcode/proxy_spark")
 #host, score, rank
 library(pROC)
 library(ggplot2)

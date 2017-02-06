@@ -91,13 +91,13 @@ for (k in 1:length(topics)){
     
     for (i in 2:(nrow(df)-1)){
       df$TP[i] <- (i-1)/(nrow(df)-2)
-      df$FP[i] <- (df$rank[i]+1-i)/ nrow(df2) #???? GUstavo? df$FP[i] <- (df$rank[i]-1-i)/ nrow(df2)
+      df$FP[i] <- (df$rank[i]+1-i)/ (nrow(df2)-nrow(df)+2) # WAS: df$FP[i] <- (df$rank[i]-1-i)/ nrow(df2)
     }
     AUC <- 0
     for (i in 1:(nrow(df)-1)){
       #print(i)
       #print((df$TP[i+1]) *(df$FP[i+1]-df$FP[i]))
-      AUC <- AUC + (df$TP[i+1]) *(df$FP[i+1]-df$FP[i])
+      AUC <- AUC + (df$TP[i]) *(df$FP[i+1]-df$FP[i]) # WAS: AUC <- AUC + (df$TP[i+1]) *(df$FP[i+1]-df$FP[i])
     }
     
     AUC_tracking <- c(AUC_tracking,AUC)
@@ -143,7 +143,7 @@ aucDF_master$numTopics <- as.factor(aucDF_master$numTopics)
 print("Made it to just before aucDF_master numTopics and auc plot")
 
 ggplot(aucDF_master, aes(numTopics,auc)) + 
-  geom_boxplot() + geom_jitter(width = 0.2) + 
+  geom_boxplot() + geom_jitter(width = 0.2, height=0) + 
   stat_summary(fun.y=mean, colour="red", geom="point", 
                shape=18, size=3,show.legend = FALSE)  +
   ggtitle("AUC boxplots for different num Topics and 10 replicates")
